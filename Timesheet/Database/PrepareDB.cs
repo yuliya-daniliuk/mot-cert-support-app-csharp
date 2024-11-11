@@ -39,6 +39,7 @@ namespace Timesheet.DB
             string sqlScript = @"
                 INSERT INTO PROJECTS (name, description) VALUES ('Project 1', 'This is a brief description of Project 1');
                 INSERT INTO ENTRIES (projectid, date, hours, description) VALUES (1, '2023-01-01', 8, 'Ate cake');
+                INSERT INTO PROJECTS (name, description) VALUES ('Project 2', 'This is the second project that I want created');
             ";
 
             ExecuteSqlFile(sqlScript);

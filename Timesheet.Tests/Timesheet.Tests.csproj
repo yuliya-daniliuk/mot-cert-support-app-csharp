@@ -10,13 +10,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ApprovalTests" Version="6.0.0" />
     <PackageReference Include="coverlet.collector" Version="6.0.0" />
+    <PackageReference Include="DotNetSeleniumExtras.PageObjects.Core" Version="4.14.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="NUnit" Version="3.14.0" />
     <PackageReference Include="NUnit.Analyzers" Version="3.9.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
     <PackageReference Include="RestAssured.Net" Version="4.4.0" />
+    <PackageReference Include="Selenium.Support" Version="4.26.1" />
+    <PackageReference Include="WebDriverManager" Version="2.17.4" />
   </ItemGroup>
 
   <ItemGroup>
