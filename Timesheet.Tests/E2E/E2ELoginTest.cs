@@ -29,5 +29,11 @@ public class E2ELoginTest
        loginPage.SendPassword(credentials.Password);
        loginPage.SubmitForm();
 
+        ProjectsPage projectsPage = new ProjectsPage(_webDriver);
+        Assert.IsTrue(projectsPage.GetTitle() == "Projects");
+
+        _webDriver.Close();
+        _webDriver.Quit();
+
    }
 }
