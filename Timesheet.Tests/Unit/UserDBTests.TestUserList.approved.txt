@@ -1,0 +1,5 @@
+﻿User{id=1, username='admin', email='admin@test.com', password='password123', role='admin'}
+User{id=2, username='user', email='user@test.com', password='password123', role='user'}
+User{id=3, username='Jon', email='test@email.com', password='password', role='user'}
+User{id=4, username='Jon', email='test@email.com', password='password', role='user'}
+User{id=5, username='Jon', email='test@email.com', password='password', role='user'}
