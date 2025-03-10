@@ -83,4 +83,46 @@ public class UserDBTests
 
     }
 
+    [Test]
+    public void GetUserProfileSuccessfully() 
+    {
+        User admin = _userDB.GetUserProfile(1);
+        Assert.That(admin.Username == "admin");
+        Assert.That(admin.Email == "admin@test.com");
+        Assert.That(admin.Password == "password123");
+        Assert.That(admin.Role == "admin");
+    }
+
+    [Test]
+    public void CannotGetNonUserProfile() 
+    {
+        List<User> listBefore = _userDB.GetUsers();
+        int countBefore = listBefore.Count;
+
+        User result = _userDB.GetUserProfile(countBefore+1);
+
+        Assert.That(result, Is.Null);
+    }
+
+    [Test]
+    public void CannotUpdatedNonUser()
+    {
+        List<User> usersBefore = _userDB.GetUsers();
+        User updatedFields = new User("JonUpd", "testUpd@email.com", "passwordUpd", "admin");
+        List<User> listBefore = _userDB.GetUsers();
+        int countBefore = listBefore.Count;
+        
+        bool updatedResult = _userDB.UpdateUser(countBefore+1, updatedFields);
+        Assert.That(updatedResult == false);
+        List<User> usersAfter = _userDB.GetUsers();
+
+        var counter = 0;
+        foreach (User user in usersBefore) 
+        {
+            var str = user.ToString() + " to " + usersAfter[counter].ToString();
+            Console.WriteLine("Comparing " + str);
+            Assert.That(user.ToString() == usersAfter[counter].ToString());
+            counter++;
+        }       
+    }
 }
