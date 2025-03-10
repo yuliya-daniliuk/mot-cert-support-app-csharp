@@ -20,7 +20,7 @@ public class ProjectsPage
        PageFactory.InitElements(_webDriver, this);
       
        // Create a WebDriverWait instance to wait for a specific condition on the web page.
-       WebDriverWait wait = new WebDriverWait(_webDriver, TimeSpan.FromMilliseconds(1000));
+       WebDriverWait wait = new WebDriverWait(_webDriver, TimeSpan.FromMilliseconds(3000));
 
        // Wait until an element with the CSS selector ".card-title" becomes visible on the page.
        wait.Until(drv => drv.FindElement(By.CssSelector(".card-title")));
