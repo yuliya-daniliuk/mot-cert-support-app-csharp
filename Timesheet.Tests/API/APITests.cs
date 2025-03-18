@@ -1,11 +1,21 @@
 using ApprovalTests;
 using static RestAssured.Dsl;
 using Timesheet.Models.Auth;
+using RestAssured.Request.Logging;
+using RestAssured.Response.Logging;
 
 namespace Timesheet.Tests.API;
 
 public class APITests
 {
+     [SetUp]
+     public void Setup()
+     {          
+          RestAssuredConfig.RequestLogLevel = RequestLogLevel.All;
+          RestAssuredConfig.ResponseLogLevel = ResponseLogLevel.All;
+          
+     }
+     
     [Test]
    public void TestGettingProject2()
    {
