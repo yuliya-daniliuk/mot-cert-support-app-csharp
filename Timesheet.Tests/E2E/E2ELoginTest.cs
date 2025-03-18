@@ -5,11 +5,14 @@ using WebDriverManager;
 using WebDriverManager.DriverConfigs.Impl;
 using DevToolsSessionDomains = OpenQA.Selenium.DevTools.V130.DevToolsSessionDomains; 
 using Network = OpenQA.Selenium.DevTools.V130.Network;
+using NUnit.Framework.Interfaces;
+using OpenQA.Selenium.Support.Extensions;
 
 namespace Timesheet.Tests.E2E;
 
 public class E2ELoginTest
 {
+    private IWebDriver _webDriver; 
 
    [Test]
    public void AdminCanAuth() {
@@ -20,7 +23,7 @@ public class E2ELoginTest
        new DriverManager().SetUpDriver(new ChromeConfig());
 
        // Initialize a new instance of the ChromeDriver.
-       IWebDriver _webDriver = new ChromeDriver();
+       _webDriver = new ChromeDriver();
 
        var devTools = _webDriver as IDevTools;
        var session = devTools.GetDevToolsSession();
@@ -45,9 +48,6 @@ public class E2ELoginTest
 
         ProjectsPage projectsPage = new ProjectsPage(_webDriver);
         Assert.IsTrue(projectsPage.GetTitle() == "Projects");
-
-        _webDriver.Close();
-        _webDriver.Quit();
 
    }
 
@@ -61,7 +61,7 @@ public class E2ELoginTest
        new DriverManager().SetUpDriver(new ChromeConfig());
 
        // Initialize a new instance of the ChromeDriver.
-       IWebDriver _webDriver = new ChromeDriver();
+       _webDriver = new ChromeDriver();
 
        var devTools = _webDriver as IDevTools;
        var session = devTools.GetDevToolsSession();
@@ -86,10 +86,25 @@ public class E2ELoginTest
 
         ProjectsPage projectsPage = new ProjectsPage(_webDriver);
         Assert.IsTrue(projectsPage.GetTitle() == "Projects");
+   }
 
+   [TearDown]
+   public void TearDown() 
+   {
+        TestContext currentContext = TestContext.CurrentContext;
+
+        if (_webDriver != null) 
+        {
+            if (currentContext.Result.Outcome != ResultState.Success)
+            {
+                var screenshotPath = $"{currentContext.Test.Name}-{DateTime.Now:yyyy-MM-dd_HH-mm-ss.fffff}.png";
+                _webDriver.TakeScreenshot().SaveAsFile(screenshotPath);
+                TestContext.AddTestAttachment(screenshotPath, "Screenshot");
+            }
         _webDriver.Close();
         _webDriver.Quit();
 
-
-   }
+        }
+        
+    }
 }
