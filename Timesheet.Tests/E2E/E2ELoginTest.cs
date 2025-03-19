@@ -7,9 +7,12 @@ using DevToolsSessionDomains = OpenQA.Selenium.DevTools.V130.DevToolsSessionDoma
 using Network = OpenQA.Selenium.DevTools.V130.Network;
 using NUnit.Framework.Interfaces;
 using OpenQA.Selenium.Support.Extensions;
+using NUnit.Allure.Core;
+using Allure.Net.Commons;
 
 namespace Timesheet.Tests.E2E;
 
+[AllureNUnit]
 public class E2ELoginTest
 {
     private IWebDriver _webDriver; 
@@ -100,6 +103,7 @@ public class E2ELoginTest
                 var screenshotPath = $"{currentContext.Test.Name}-{DateTime.Now:yyyy-MM-dd_HH-mm-ss.fffff}.png";
                 _webDriver.TakeScreenshot().SaveAsFile(screenshotPath);
                 TestContext.AddTestAttachment(screenshotPath, "Screenshot");
+                AllureApi.AddAttachment(screenshotPath, currentContext.Test.Name);
             }
         _webDriver.Close();
         _webDriver.Quit();

@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Allure.NUnit" Version="2.12.1" />
     <PackageReference Include="ApprovalTests" Version="6.0.0" />
     <PackageReference Include="coverlet.collector" Version="6.0.0" />
     <PackageReference Include="DotNetSeleniumExtras.PageObjects.Core" Version="4.14.1" />
@@ -30,5 +31,14 @@
   <ItemGroup>
     <Using Include="NUnit.Framework" />
   </ItemGroup>
+<ItemGroup>
+  <None Remove="allureConfig.json" />
+</ItemGroup>
+
+<ItemGroup>
+  <Content Include="allureConfig.json">
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  </Content>
+</ItemGroup>
 
 </Project>

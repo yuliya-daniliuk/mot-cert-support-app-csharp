@@ -3,9 +3,10 @@ using static RestAssured.Dsl;
 using Timesheet.Models.Auth;
 using RestAssured.Request.Logging;
 using RestAssured.Response.Logging;
+using NUnit.Allure.Core;
 
 namespace Timesheet.Tests.API;
-
+[AllureNUnit]
 public class APITests
 {
      [SetUp]

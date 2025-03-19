@@ -3,7 +3,9 @@ namespace Timesheet.Tests.Unit;
 using ApprovalTests;
 using Timesheet.DB;
 using Timesheet.Models.User;
+using NUnit.Allure.Core;
 
+[AllureNUnit]
 public class UserDBTests
 {
     private static UserDB _userDB;
