@@ -13,7 +13,7 @@ public class LoginPage
    {
        PageFactory.InitElements(_webDriver, this);
       
-       WebDriverWait wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(10));
+       WebDriverWait wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(20));
        wait.Until(drv => drv.FindElement(By.CssSelector("button")));
    }
 

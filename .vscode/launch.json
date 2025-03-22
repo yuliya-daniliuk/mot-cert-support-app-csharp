@@ -1,0 +1,18 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": ".NET Core Launch Test",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/Timesheet.Tests/bin/Debug/net8.0/Timesheet.Tests.dll", // Replace with your DLL
+            "args": ["--no-build"],
+            "cwd": "${workspaceFolder}/Timesheet.Tests",
+            "stopAtEntry": false,
+            "preLaunchTask": "none"  // No pre-build task before running tests
+          }
+    ]
+}
