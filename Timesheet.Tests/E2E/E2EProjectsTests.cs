@@ -26,10 +26,11 @@ public class E2EProjectsTests
 
         new DriverManager().SetUpDriver(new ChromeConfig());
 
-        ChromeOptions options = new ChromeOptions();
+        ///ChromeOptions options = new ChromeOptions();
         ///options.AddArguments("--headless");
 
-        IWebDriver _webDriver = new ChromeDriver(options);
+        ///IWebDriver _webDriver = new ChromeDriver(options);
+        _webDriver = new ChromeDriver();
 
         _webDriver.Navigate().GoToUrl("http://localhost:8080");
 
@@ -49,18 +50,58 @@ public class E2EProjectsTests
         Thread.Sleep(1000);
 
         ReadOnlyCollection<IWebElement> projects = _webDriver.FindElements(By.CssSelector("tbody tr"));
-
         Assert.That(projects.Count, Is.GreaterThan(0));
 
     }
 
+    [Test]
+    public void testAddingANewProject()
+    {
+        DataBuilder dataBuilder = new DataBuilder();
+        TimesheetCredential credentials = dataBuilder.GetUserCredentials("admin");
+
+        new DriverManager().SetUpDriver(new ChromeConfig());
+
+        ///ChromeOptions options = new ChromeOptions(); - for some reason this plus new ChromeDriver(options) causes driver to be null in teardown
+        /// and not be closed properly
+        ///options.AddArguments("--headless");
+
+        ///IWebDriver _webDriver = new ChromeDriver(options);
+        _webDriver = new ChromeDriver();
+
+        _webDriver.Navigate().GoToUrl("http://localhost:8080");
+
+        // Create an instance of the LoginPage class, which is a custom class.
+       LoginPage loginPage = new LoginPage(_webDriver);
+
+       // Perform actions on the login page: sending email, password, and submitting the form.
+       loginPage.SendEmail(credentials.Email);
+       loginPage.SendPassword(credentials.Password);
+       loginPage.SubmitForm();
+
+        ProjectsPage projectsPage = new ProjectsPage(_webDriver);
+        projectsPage.ClickManageProject();
+
+        ProjectsManagementPage projectsManagementPage = new ProjectsManagementPage(_webDriver);
+        int initialCount = projectsManagementPage.GetProjectsList().Count;
+
+        projectsManagementPage.SendProjectName("New Project");
+        projectsManagementPage.SendProjectDescription("This is a new project");
+        projectsManagementPage.ClickAddProject();
+
+        IList<IWebElement> projects = projectsManagementPage.GetProjectsList();
+        Assert.That(projects.Count, Is.EqualTo(initialCount + 1));
+    }
+    
     [TearDown]
-   public void TearDown() 
-   {
+    public void TearDown() 
+    {
         TestContext currentContext = TestContext.CurrentContext;
+        Console.WriteLine($"we are in teardown not checked for null driver {_webDriver.Title}");
 
         if (_webDriver != null) 
         {
+            Console.WriteLine("we are in teardown");
             if (currentContext.Result.Outcome != ResultState.Success)
             {
                 var screenshotPath = $"{currentContext.Test.Name}-{DateTime.Now:yyyy-MM-dd_HH-mm-ss.fffff}.png";

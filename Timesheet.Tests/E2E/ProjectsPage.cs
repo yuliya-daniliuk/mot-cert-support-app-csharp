@@ -31,9 +31,17 @@ public class ProjectsPage
    [CacheLookup]
    private IWebElement title;
 
+   [FindsBy(How = How.CssSelector, Using = "a[href='#/manage/projects']")]
+   [CacheLookup]
+   private IWebElement aManageProject;
+
    // A public method named "getTitle" that returns the text of the "title" WebElement.
    public string GetTitle() {
        return title.Text;
+   }
+
+   public void ClickManageProject() {
+      aManageProject.Click();
    }
 
 }
