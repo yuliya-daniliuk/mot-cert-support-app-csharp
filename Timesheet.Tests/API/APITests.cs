@@ -39,14 +39,16 @@ public class APITests
 
    [Test]
    public void TestLoginReturnsPositiveResponse(){
-       HttpResponseMessage response = APITestsRequests.PostLogin("admin@test.com", "password123").Then().Extract().Response();
+       Login loginPayload = new Login("admin@test.com", "password123");
+       HttpResponseMessage response = APITestsRequests.PostLogin(loginPayload).Then().Extract().Response();
 
        Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.OK));
    }
 
    [Test]
    public void TestLoginReturnsNegativeResponse() {
-       HttpResponseMessage response = APITestsRequests.PostLogin("incorrect@test.com", "password123").Then().Extract().Response();
+       Login loginPayload = new Login("incorrect@test.com", "password123");
+       HttpResponseMessage response = APITestsRequests.PostLogin(loginPayload).Then().Extract().Response();
 
 
        Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.Unauthorized));
@@ -54,26 +56,31 @@ public class APITests
 
    [Test]
    public void TestValidateReturnsPositiveResponse(){
-       Credentials credentials = (Credentials)APITestsRequests.PostLogin("admin@test.com", "password123").DeserializeTo(typeof (Credentials));
+       Login loginPayload = new Login("admin@test.com", "password123");
+       Credentials credentials = (Credentials)APITestsRequests.PostLogin(loginPayload).DeserializeTo(typeof (Credentials));
 
-       HttpResponseMessage response = APITestsRequests.PostValidate(credentials.Token);
+       Token tokenPayload = new Token(credentials.Token);
+       HttpResponseMessage response = APITestsRequests.PostValidate(tokenPayload);
 
        Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.OK));
    }
 
    [Test]
    public void TestValidateReturnsNegativeResponse(){
-       HttpResponseMessage response = APITestsRequests.PostValidate("321cba");
+       Token tokenPayload = new Token("321cba");
+       HttpResponseMessage response = APITestsRequests.PostValidate(tokenPayload);
 
        Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.Unauthorized));
    }
 
    [Test]
    public void TestLogoutReturnPositiveResponse(){
-       Credentials credentials = (Credentials)APITestsRequests.PostLogin("admin@test.com", "password123")
+       Login loginPayload = new Login("admin@test.com", "password123");
+       Credentials credentials = (Credentials)APITestsRequests.PostLogin(loginPayload)
                                        .DeserializeTo(typeof (Credentials));
 
-       HttpResponseMessage response = APITestsRequests.PostLogout(credentials.Token);
+       Token tokenPayload = new Token(credentials.Token);
+       HttpResponseMessage response = APITestsRequests.PostLogout(tokenPayload);
 
        Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.Accepted));
    }

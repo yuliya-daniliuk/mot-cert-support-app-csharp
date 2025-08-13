@@ -1,5 +1,6 @@
 
 using RestAssured.Response;
+using Timesheet.Models.Auth;
 using static RestAssured.Dsl;
 
 namespace Timesheet.Tests.API;
@@ -8,16 +9,16 @@ public class APITestsRequests
 {
     private static string host = "http://localhost:8080";
 
-   public static VerifiableResponse PostLogin(string email, string password) {
+   public static VerifiableResponse PostLogin(Login login) {
        return Given()
-               .Body("{\"email\":\"" + email + "\",\"password\":\"" + password + "\"}")
+               .Body(login)
                .ContentType("application/json")
                .Post(host + "/v1/auth/login");
    }
 
-   public static HttpResponseMessage PostValidate(string token) {
+   public static HttpResponseMessage PostValidate(Token token) {
        return Given()
-               .Body("{\"token\":\"" + token + "\"}")
+               .Body(token)
                .ContentType("application/json")
                .Post(host + "/v1/auth/validate")
                .Then()
@@ -25,9 +26,9 @@ public class APITestsRequests
                .Response();
    }
 
-   public static HttpResponseMessage PostLogout(string token) {
+   public static HttpResponseMessage PostLogout(Token token) {
        return Given()
-               .Body("{\"token\":\"" + token + "\"}")
+               .Body(token)
                .ContentType("application/json")
                .Post(host + "/v1/auth/logout")
                .Then()
