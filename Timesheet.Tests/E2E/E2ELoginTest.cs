@@ -66,15 +66,15 @@ public class E2ELoginTest
        // Initialize a new instance of the ChromeDriver.
        _webDriver = new ChromeDriver();
 
-    //    var devTools = _webDriver as IDevTools;
-    //    var session = devTools.GetDevToolsSession();
-    //    var domains = session.GetVersionSpecificDomains<DevToolsSessionDomains>();
-    //    domains.Network.Enable(new Network.EnableCommandSettings());
-    //    Network.EmulateNetworkConditionsCommandSettings command = new Network.EmulateNetworkConditionsCommandSettings
-    //     {
-    //         Latency = 1000,
-    //     };
-    //     domains.Network.EmulateNetworkConditions(command);
+       /* var devTools = _webDriver as IDevTools;
+       var session = devTools.GetDevToolsSession();
+       var domains = session.GetVersionSpecificDomains<DevToolsSessionDomains>();
+       domains.Network.Enable(new Network.EnableCommandSettings());
+       Network.EmulateNetworkConditionsCommandSettings command = new Network.EmulateNetworkConditionsCommandSettings
+        {
+            Latency = 1000,
+        };
+        domains.Network.EmulateNetworkConditions(command); */
 
        // Open a web page with the given URL in the Chrome browser.
        _webDriver.Navigate().GoToUrl("http://localhost:8080");

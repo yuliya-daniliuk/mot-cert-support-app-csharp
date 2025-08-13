@@ -17,6 +17,23 @@ using System.Collections.ObjectModel;
 public class E2EProjectsTests
 {
     private IWebDriver _webDriver; 
+
+    [SetUp]
+   public void SetUp() {
+       new DriverManager().SetUpDriver(new ChromeConfig());
+
+       /* ChromeOptions options = new ChromeOptions();
+       options.AddArguments("--headless");
+       _webDriver = new ChromeDriver(options); - for some reason adding options here breaks the second test */
+       _webDriver = new ChromeDriver();
+
+       _webDriver.Navigate().GoToUrl("http://localhost:8080");
+
+       LoginPage loginPage = new LoginPage(_webDriver);
+       loginPage.SendEmail("admin@test.com");
+       loginPage.SendPassword("password123");
+       loginPage.SubmitForm();
+   }
     
    [Test]
     public void TestProjectListIsShownOnPage()
@@ -24,34 +41,14 @@ public class E2EProjectsTests
         DataBuilder dataBuilder = new DataBuilder();
         TimesheetCredential credentials = dataBuilder.GetUserCredentials("admin");
 
-        new DriverManager().SetUpDriver(new ChromeConfig());
-
-        ///ChromeOptions options = new ChromeOptions();
-        ///options.AddArguments("--headless");
-
-        ///IWebDriver _webDriver = new ChromeDriver(options);
-        _webDriver = new ChromeDriver();
-
-        _webDriver.Navigate().GoToUrl("http://localhost:8080");
-
-        // Create an instance of the LoginPage class, which is a custom class.
-       LoginPage loginPage = new LoginPage(_webDriver);
-
-       // Perform actions on the login page: sending email, password, and submitting the form.
-       loginPage.SendEmail(credentials.Email);
-       loginPage.SendPassword(credentials.Password);
-       loginPage.SubmitForm();
-
         ProjectsPage projectsPage = new ProjectsPage(_webDriver);
         Assert.IsTrue(projectsPage.GetTitle() == "Projects");
 
         _webDriver.FindElement(By.CssSelector("a[href='#/manage/projects']")).Click();
-
         Thread.Sleep(1000);
 
         ReadOnlyCollection<IWebElement> projects = _webDriver.FindElements(By.CssSelector("tbody tr"));
         Assert.That(projects.Count, Is.GreaterThan(0));
-
     }
 
     [Test]
@@ -59,25 +56,6 @@ public class E2EProjectsTests
     {
         DataBuilder dataBuilder = new DataBuilder();
         TimesheetCredential credentials = dataBuilder.GetUserCredentials("admin");
-
-        new DriverManager().SetUpDriver(new ChromeConfig());
-
-        ///ChromeOptions options = new ChromeOptions(); - for some reason this plus new ChromeDriver(options) causes driver to be null in teardown
-        /// and not be closed properly
-        ///options.AddArguments("--headless");
-
-        ///IWebDriver _webDriver = new ChromeDriver(options);
-        _webDriver = new ChromeDriver();
-
-        _webDriver.Navigate().GoToUrl("http://localhost:8080");
-
-        // Create an instance of the LoginPage class, which is a custom class.
-       LoginPage loginPage = new LoginPage(_webDriver);
-
-       // Perform actions on the login page: sending email, password, and submitting the form.
-       loginPage.SendEmail(credentials.Email);
-       loginPage.SendPassword(credentials.Password);
-       loginPage.SubmitForm();
 
         ProjectsPage projectsPage = new ProjectsPage(_webDriver);
         projectsPage.ClickManageProject();
@@ -111,8 +89,6 @@ public class E2EProjectsTests
             }
         _webDriver.Close();
         _webDriver.Quit();
-
-        }
-        
+        }      
     }
 }
