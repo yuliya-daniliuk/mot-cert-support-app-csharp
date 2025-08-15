@@ -16,3 +16,24 @@ jobs:
         dotnet-version: '8.0.x'
     - name: Run unit checks
       run: dotnet test Timesheet.Tests --filter FullyQualifiedName~Timesheet.Tests.Unit
+    - name: Run app
+      run: |
+        dotnet build
+        dotnet run --project Timesheet.csproj &
+    
+    - name: Wait for app to start
+      run: sleep 10 # Wait for the app to start and the database to be created
+    
+    - name: Install Selenium WebDriver
+      run: |
+        dotnet add package Selenium.WebDriver.ChromeDriver
+
+    - name: Install driver manager tool
+      run: dotnet tool install --global WebDriverManager.Net
+    
+    - name: Setup ChromeDriver
+      run: WebDriverManager.Net.exe --browser-version auto
+    
+    - name: Run E2E tests
+      run: |
+        dotnet test Timesheet.Tests --filter Timesheet.Tests.API --no-build
