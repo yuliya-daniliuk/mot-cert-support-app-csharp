@@ -38,8 +38,8 @@ jobs:
         dotnet add package NUnit3TestAdapter
         dotnet add package Allure.NUnit
     
-    - name: Setup ChromeDriver
-      run: WebDriverManager.Net.exe --browser-version auto
+    #- name: Setup ChromeDriver
+     # run: WebDriverManager.Net.exe --browser-version auto
     
     - name: Run E2E tests
       run: |
