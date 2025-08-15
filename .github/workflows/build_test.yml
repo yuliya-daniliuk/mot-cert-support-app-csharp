@@ -6,7 +6,7 @@ on:
    - trunk
 
 jobs:
-  build:s
+  build:
     runs-on: macos-latest
 
     steps:
