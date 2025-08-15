@@ -6,13 +6,13 @@ on:
    - trunk
 
 jobs:
-build:
-  runs-on: macos-latest
+  build:s
+    runs-on: macos-latest
 
-  steps:
-   - uses: actions/checkout@v4
-   - uses: actions/setup-dotnet@v3
-     with:
-       dotnet-version: '8.0.x'
-   - name: Run unit checks
-     run: dotnet test Timesheet.Tests --filter FullyQualifiedName~Timesheet.Tests.Unit
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.x'
+    - name: Run unit checks
+      run: dotnet test Timesheet.Tests --filter FullyQualifiedName~Timesheet.Tests.Unit
