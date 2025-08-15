@@ -37,9 +37,6 @@ jobs:
         dotnet add package NUnit
         dotnet add package NUnit3TestAdapter
         dotnet add package Allure.NUnit
-
-    - name: Install driver manager tool
-      run: dotnet tool install --global WebDriverManager.Net
     
     - name: Setup ChromeDriver
       run: WebDriverManager.Net.exe --browser-version auto
