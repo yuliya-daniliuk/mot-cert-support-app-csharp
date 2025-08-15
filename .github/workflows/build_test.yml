@@ -18,7 +18,11 @@ jobs:
       run: dotnet test Timesheet.Tests --filter FullyQualifiedName~Timesheet.Tests.Unit
     - name: Run app
       run: |
+        cd Timesheet
         dotnet build
+        cd ../Timesheet.Tests
+        dotnet build
+        cd ../Timesheet
         dotnet run --project Timesheet.csproj &
     
     - name: Wait for app to start
