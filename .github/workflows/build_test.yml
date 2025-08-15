@@ -44,3 +44,4 @@ jobs:
     - name: Run E2E tests
       run: |
         dotnet test Timesheet.Tests --filter Timesheet.Tests.API --no-build
+        dotnet test Timesheet.Tests --filter Timesheet.Tests.E2E --no-build
